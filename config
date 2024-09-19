@@ -3,6 +3,7 @@
 # Copy this to ~/.config/sway/config and edit it to your liking.
 #
 # Read `man 5 sway` for a complete reference.
+font pango: SourceCodePro Medium 6
 
 ### Variables
 #
@@ -18,7 +19,8 @@ set $term foot
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu dmenu_path | wmenu | xargs swaymsg exec --
+#set $menu dmenu_path | wmenu | xargs swaymsg exec --
+set $menu wofi --show run
 
 ### Output configuration
 #
@@ -45,7 +47,6 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 # resumed. It will also lock your screen before your computer goes to sleep.
 
 ### Input configuration
-
 #
 # Example configuration:
 #
@@ -58,12 +59,6 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 #
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
-# "identifier": "1267:12624:ELAN0670:00_04F3:3150_Touchpad",h
-input "1267:12624:ELAN0670:00_04F3:3150_Touchpad" {
-    tap enabled
-    dwt enabled
-    middle_emulation enabled
-}
 
 ### Key bindings
 #
@@ -154,8 +149,6 @@ input "1267:12624:ELAN0670:00_04F3:3150_Touchpad" {
     bindsym $mod+s layout stacking
     bindsym $mod+w layout tabbed
     bindsym $mod+e layout toggle split
-    # Switch to binary space partitioning (bsp) layout
-    bindsym $mod+Shift+b layout bsp
 
     # Make the current focus fullscreen
     bindsym $mod+f fullscreen
@@ -210,33 +203,31 @@ bindsym $mod+r mode "resize"
 #
 # Read `man 5 sway-bar` for more information about this section.
 bar {
-    position top
-    height 10px
-    font pango:monospace 5
-
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %X'; do sleep 1; done
-
-    colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
-    }
+  swaybar_command waybar
 }
 
-include /etc/sway/config.d/*  
-
-
+include /etc/sway/config.d/*
 
 # Increase brightness
-bindsym XF86MonBrightnessUp exec brightnessctl set +10%
+bindsym XF86MonBrightnessUp exec brightnessctl set +3%
 
 # Decrease brightness
-bindsym XF86MonBrightnessDown exec brightnessctl set 10%-
+bindsym XF86MonBrightnessDown exec brightnessctl set 3%-
 
   bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
     bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
     bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
 
-font pango:SourceCodePro Regular 6
+
+
+input "1267:12624:ELAN0670:00_04F3:3150_Touchpad" {
+    tap enabled
+    dwt enabled
+    middle_emulation enabled
+    natural_scroll enabled
+    accel_profile "flat"
+    pointer_accel 0.5
+    scroll_factor 0.1
+}
+
+
